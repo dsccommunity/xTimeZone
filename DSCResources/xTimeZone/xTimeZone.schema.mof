@@ -1,0 +1,9 @@
+
+[ClassVersion("1.0.0.0"), FriendlyName("xTimeZone")]
+class xTimeZone : OMI_BaseResource
+{
+    [Key, Description("Specifies the TimeZone.")] String TimeZone;
+};
+
+
+
