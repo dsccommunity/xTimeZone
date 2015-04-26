@@ -32,8 +32,8 @@ Describe 'Set-TargetResource'{
     }
 
     It 'Should not call Set-TimeZone when Current TimeZone already set to desired State'{
-        $SystemTimeZone = & tzutil.exe /g
-        Set-TimeZoneTargetResource -TimeZone $SystemTimeZone
+        $SystemTimeZone = Get-TimeZoneTargetResource -TimeZone 'Eastern Standard Time'
+        Set-TimeZoneTargetResource -TimeZone $SystemTimeZone.TimeZone
         Assert-MockCalled -ModuleName xTimeZone -CommandName Set-TimeZone -Scope It -Exactly 0
     }
 }
