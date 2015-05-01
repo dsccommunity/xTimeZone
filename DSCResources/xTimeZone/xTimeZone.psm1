@@ -13,7 +13,7 @@ function Get-TargetResource
     )
 
     #Get the current TimeZone
-    $CurrentTimeZone = Invoke-Expression "tzutil.exe /g"
+    $CurrentTimeZone = Get-TimeZone
 
     $returnValue = @{
         TimeZone = $CurrentTimeZone
@@ -36,17 +36,19 @@ function Set-TargetResource
     )
     
     #Output the result of Get-TargetResource function.
-    $GetCurrentTimeZone = Get-TargetResource -TimeZone $TimeZone
-
+    $CurrentTimeZone = Get-TimeZone
+    
     If($PSCmdlet.ShouldProcess("'$TimeZone'","Replace the System Time Zone"))
     {
-        Try
-        {
-            Write-Verbose "Setting the TimeZone"
-            Invoke-Expression "tzutil.exe /s ""$TimeZone"""
+        Try{
+            if($CurrentTimeZone -ne $TimeZone){
+                Write-Verbose "Setting the TimeZone"
+                Set-TimeZone -TimeZone $TimeZone}
+            else{
+                Write-Verbose "TimeZone already set to $TimeZone"
+            }
         }
-        Catch
-        {
+        Catch{
             $ErrorMsg = $_.Exception.Message
             Write-Verbose $ErrorMsg
         }
@@ -67,15 +69,36 @@ function Test-TargetResource
     )
 
     #Output from Get-TargetResource
-    $Get = Get-TargetResource -TimeZone $TimeZone
+    $CurrentTimeZone = Get-TimeZone
 
-    If($TimeZone -eq $Get.TimeZone)
-    {
+    If($TimeZone -eq $CurrentTimeZone){
         return $true
     }
-    Else
-    {
+    Else{
         return $false
+    }
+}
+
+Function Get-TimeZone {
+    [CmdletBinding()]
+    param()
+
+    & tzutil.exe /g
+}
+
+Function Set-TimeZone {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true)]
+        [System.String]
+        $TimeZone
+    )
+
+    try{
+        & tzutil.exe /s $TimeZone    
+    }catch{
+        $ErrorMsg = $_.Exception.Message
+        Write-Verbose $ErrorMsg
     }
 }
 
