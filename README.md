@@ -12,7 +12,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### xTimeZone
 
-* **TimeZone**: Specifies the Time Zone. To discover all valid time zones for this property, use this PowerShell command: (tzutil /l) -notmatch '\(|^$'
+* **TimeZone**: Specifies the Time Zone. To discover all valid time zones for this property, use this PowerShell command: `[System.TimeZoneInfo]::GetSystemTimeZones().Id`
 
 
 ## Versions
