@@ -9,6 +9,11 @@ function Get-TargetResource
         [parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [String]
+        $Target, 
+
+        [parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [String]
         $TimeZone
     )
 
@@ -29,6 +34,11 @@ function Set-TargetResource
     [CmdletBinding(SupportsShouldProcess=$true)]
     param
     (
+        [parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [String]
+        $Target, 
+
         [parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [String]
@@ -62,6 +72,11 @@ function Test-TargetResource
     [OutputType([Boolean])]
     param
     (
+        [parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [String]
+        $Target, 
+
         [parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [String]
