@@ -1,7 +1,7 @@
 [ClassVersion("1.0.0.0"), FriendlyName("xTimeZone")]
 class xTimeZone : OMI_BaseResource
 {
-    [Key, Description("Specifies the Target"), ValueMap{"localhost"}, Values{"localhost"}] String Target;
+    [Key, Description("Specifies the the resource is a single instance, the value must be 'True'"), ValueMap{"True"}, Values{"True"}] String SingleInstance;
     [Required, Description("Specifies the TimeZone.")] String TimeZone;
 };
 
