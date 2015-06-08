@@ -30,8 +30,8 @@ Configuration SetTimeZone
    {
         xTimeZone TimeZoneExample
         {
-            Target   = 'localhost'
-            TimeZone = $SystemTimeZone
+            SingleInstance = 'True'
+            TimeZone       = $SystemTimeZone
         }
    }
 }
