@@ -17,6 +17,10 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ## Versions
 
+### 1.1.0.0
+
+* Added tests
+
 ### 1.0.0.0
 
 * Initial release with the following resource:
