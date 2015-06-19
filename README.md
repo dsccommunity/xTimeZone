@@ -13,7 +13,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 ### xTimeZone
 
 * **TimeZone**: Specifies the Time Zone. To discover all valid time zones for this property, use this PowerShell command: `[System.TimeZoneInfo]::GetSystemTimeZones().Id`
-* **SingleInstance**: Specifies if the resource is a single instance, the value must be 'True'
+* **IsSingleInstance**: Specifies if the resource is a single instance, the value must be 'Yes'
 
 ## Versions
 
@@ -21,6 +21,11 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 * Initial release with the following resource:
     - xTimeZone 
+
+### vNext
+
+* Changed xTimeZone key to IsSingleInstance
+    
 
 ## Examples 
 
