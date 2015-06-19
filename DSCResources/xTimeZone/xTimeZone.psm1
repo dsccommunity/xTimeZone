@@ -22,7 +22,7 @@ function Get-TargetResource
         [parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [String]
-        $SingleInstance, 
+        $IsSingleInstance, 
 
         [parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
@@ -50,7 +50,7 @@ function Set-TargetResource
         [parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [String]
-        $SingleInstance, 
+        $IsSingleInstance, 
 
         [parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
@@ -88,7 +88,7 @@ function Test-TargetResource
         [parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [String]
-        $SingleInstance, 
+        $IsSingleInstance, 
 
         [parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
