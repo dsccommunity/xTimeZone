@@ -33,7 +33,5 @@ VariablesToExport = '*'
 # Aliases to export from this module
 AliasesToExport = '*'
 
-RootModule = 'MSFT_xTimeZone.psm1'
-DscResourcesToExport = 'MSFT_xTimeZone'  
 }
 
