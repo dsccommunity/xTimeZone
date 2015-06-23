@@ -30,7 +30,7 @@ Configuration SetTimeZone
    {
         xTimeZone TimeZoneExample
         {
-            SingleInstance = 'True'
+            IsSingleInstance = 'Yes'
             TimeZone       = $SystemTimeZone
         }
    }
