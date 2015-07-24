@@ -17,6 +17,13 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ## Versions
 
+### Unreleased
+
+
+### 1.2.0.0
+
+* Modified schema to follow best practices for singleton resources (changed xTimeZone key to IsSingleInstance)
+
 ### 1.1.0.0
 
 * Added tests
@@ -24,12 +31,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 ### 1.0.0.0
 
 * Initial release with the following resource:
-    - xTimeZone 
-
-### vNext
-
-* Changed xTimeZone key to IsSingleInstance
-    
+    - xTimeZone     
 
 ## Examples 
 
