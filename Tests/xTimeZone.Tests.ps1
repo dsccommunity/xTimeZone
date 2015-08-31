@@ -1,5 +1,13 @@
 ﻿Import-Module "$PSScriptRoot\..\DSCResources\xTimeZone\xTimeZone.psm1" -Prefix 'TimeZone' -Force
 
+$moduleRoot = "${env:ProgramFiles}\WindowsPowerShell\Modules\xTimeZone"
+
+if(!(test-path $moduleRoot))
+{
+    New-Item -Path $moduleRoot -ItemType Directory > $null
+}
+Copy-Item -Path $PSScriptRoot\..\* -Destination $moduleRoot -Recurse -Force -Exclude '.git'
+
 Describe 'Schema' {
     it 'IsSingleInstance should be mandatory with one value.' {
         $timeZoneResource = Get-DscResource -Name xTimeZone
