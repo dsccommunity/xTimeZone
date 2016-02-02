@@ -17,6 +17,8 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ## Versions
 
+### Unreleased
+
 ### 1.3.0.0
 
 * Updated tests: now we are deploying xTimeZone instead of overwriting PSModulePath to make tests pass on local machine
