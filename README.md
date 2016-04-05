@@ -23,6 +23,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
              Added Integration tests.
              Resource code updated to match style guidelines.
              Get-TargetResource returns IsSingleInstance value.
+* AppVeyor build machine set to WMF5.
 
 ### 1.3.0.0
 
