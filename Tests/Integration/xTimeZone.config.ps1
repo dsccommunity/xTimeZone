@@ -4,7 +4,7 @@ $TestTimeZone = [PSObject]@{
 }
 
 configuration xTimezone_Config {
-    Import-DscResource -ModuleName xTimeZone -ModuleVersion 1.3.0.0
+    Import-DscResource -ModuleName xTimeZone
     node localhost {
         xTimeZone Integration_Test {
             TimeZone         = $TestTimeZone.TimeZone
