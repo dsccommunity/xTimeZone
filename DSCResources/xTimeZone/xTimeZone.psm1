@@ -22,7 +22,7 @@ function Get-TargetResource
         [parameter(Mandatory = $true)]
         [ValidateSet('Yes')]
         [String]
-        $IsSingleInstance, 
+        $IsSingleInstance,
 
         [parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
@@ -35,6 +35,7 @@ function Get-TargetResource
 
     $returnValue = @{
         TimeZone = $CurrentTimeZone
+        IsSingleInstance = 'Yes'
     }
 
     #Output the target resource
@@ -50,7 +51,7 @@ function Set-TargetResource
         [parameter(Mandatory = $true)]
         [ValidateSet('Yes')]
         [String]
-        $IsSingleInstance, 
+        $IsSingleInstance,
 
         [parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
@@ -61,19 +62,23 @@ function Set-TargetResource
     #Output the result of Get-TargetResource function.
     $CurrentTimeZone = Get-TimeZone
     
-    If($PSCmdlet.ShouldProcess("'$TimeZone'","Replace the System Time Zone"))
+    if($PSCmdlet.ShouldProcess("'$TimeZone'","Replace the System Time Zone"))
     {
-        Try{
-            if($CurrentTimeZone -ne $TimeZone){
-                Write-Verbose "Setting the TimeZone"
+        try
+        {
+            if($CurrentTimeZone -ne $TimeZone)
+            {
+                Write-Verbose -Verbose "Setting the TimeZone"
                 Set-TimeZone -TimeZone $TimeZone}
-            else{
-                Write-Verbose "TimeZone already set to $TimeZone"
+            else
+            {
+                Write-Verbose -Verbose "TimeZone already set to $TimeZone"
             }
         }
-        Catch{
+        catch
+        {
             $ErrorMsg = $_.Exception.Message
-            Write-Verbose $ErrorMsg
+            Write-Verbose -Verbose $ErrorMsg
         }
     }
 }
@@ -99,10 +104,12 @@ function Test-TargetResource
     #Output from Get-TargetResource
     $CurrentTimeZone = Get-TimeZone
 
-    If($TimeZone -eq $CurrentTimeZone){
+    if($TimeZone -eq $CurrentTimeZone)
+    {
         return $true
     }
-    Else{
+    else
+    {
         return $false
     }
 }
@@ -122,9 +129,12 @@ Function Set-TimeZone {
         $TimeZone
     )
 
-    try{
-        & tzutil.exe /s $TimeZone    
-    }catch{
+    try
+    {
+        & tzutil.exe /s $TimeZone
+    }
+    catch
+    {
         $ErrorMsg = $_.Exception.Message
         Write-Verbose $ErrorMsg
     }

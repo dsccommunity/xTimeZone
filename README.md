@@ -19,6 +19,11 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### Unreleased
 
+* xTimeZone: Unit tests updated to use standard test template.
+             Added Integration tests.
+             Resource code updated to match style guidelines.
+             Get-TargetResource returns IsSingleInstance value.
+
 ### 1.3.0.0
 
 * Updated tests: now we are deploying xTimeZone instead of overwriting PSModulePath to make tests pass on local machine
