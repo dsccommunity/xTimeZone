@@ -19,6 +19,12 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### Unreleased
 
+* xTimeZone: Unit tests updated to use standard test template.
+             Added Integration tests.
+             Resource code updated to match style guidelines.
+             Get-TargetResource returns IsSingleInstance value.
+* AppVeyor build machine set to WMF5.
+
 ### 1.3.0.0
 
 * Updated tests: now we are deploying xTimeZone instead of overwriting PSModulePath to make tests pass on local machine
@@ -35,7 +41,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 ### 1.0.0.0
 
 * Initial release with the following resource:
-    - xTimeZone     
+    - xTimeZone
 
 ## Examples 
 
