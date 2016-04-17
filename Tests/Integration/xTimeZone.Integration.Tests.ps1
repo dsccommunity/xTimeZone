@@ -44,7 +44,9 @@ try
         #endregion
 
         It 'Should have set the resource and all the parameters should match' {
-            $current = Get-DscConfiguration | Where-Object {$_.ConfigurationName -eq "$($Global:DSCResourceName)_Config"}
+            $current = Get-DscConfiguration | Where-Object {
+                $_.ConfigurationName -eq "$($Global:DSCResourceName)_Config"
+            }
             $current.Timezone         | Should Be $TestTimeZone.Timezone
             $current.IsSingleInstance | Should Be $TestTimeZone.IsSingleInstance
         }

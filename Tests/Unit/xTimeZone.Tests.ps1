@@ -32,6 +32,7 @@ try
                 $timeZoneResource.Properties.Where{$_.Name -eq 'IsSingleInstance'}.Values | should be 'Yes'
             }
         }
+
         Describe "$($Global:DSCResourceName)\Get-TargetResource" {
             Mock -ModuleName xTimeZone -CommandName Get-TimeZone -MockWith {
                 Write-Output 'Pacific Standard Time'
@@ -62,7 +63,6 @@ try
             It 'Call Set-TimeZone' {
                 Set-TargetResource -TimeZone 'Pacific Standard Time' -IsSingleInstance 'Yes'
                 Assert-MockCalled `
-                    -ModuleName xTimeZone `
                     -CommandName Set-TimeZone `
                     -Exactly 1
             }
@@ -75,7 +75,6 @@ try
                     -TimeZone $SystemTimeZone.TimeZone `
                     -IsSingleInstance 'Yes'
                 Assert-MockCalled `
-                    -ModuleName xTimeZone `
                     -CommandName Set-TimeZone `
                     -Scope It `
                     -Exactly 0
