@@ -30,6 +30,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
              Added unit tests for TimezoneHelper.psm1
              Converted Get-Timezone to use CIM cmdlets.
              Added support for Set-Timezone to use .NET reflection if possible.
+             Added message localization support.
 * Copied SetTimeZone.ps1 example into Readme.md.
 * AppVeyor build machine set to WMF5.
 
