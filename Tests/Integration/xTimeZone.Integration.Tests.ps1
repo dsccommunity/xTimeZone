@@ -21,6 +21,8 @@ $TestEnvironment = Initialize-TestEnvironment `
 
 # Store the test machine timezone
 $CurrentTimeZone = & tzutil.exe /g
+# Change the current timezone so that a complete test occurs.
+tzutil.exe /s 'Eastern Standard Time'
 
 # Using try/finally to always cleanup even if something awful happens.
 try
@@ -44,7 +46,9 @@ try
         #endregion
 
         It 'Should have set the resource and all the parameters should match' {
-            $current = Get-DscConfiguration | Where-Object {$_.ConfigurationName -eq "$($Global:DSCResourceName)_Config"}
+            $current = Get-DscConfiguration | Where-Object {
+                $_.ConfigurationName -eq "$($Global:DSCResourceName)_Config"
+            }
             $current.Timezone         | Should Be $TestTimeZone.Timezone
             $current.IsSingleInstance | Should Be $TestTimeZone.IsSingleInstance
         }
