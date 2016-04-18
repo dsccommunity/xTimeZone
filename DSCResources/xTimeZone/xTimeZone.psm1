@@ -88,8 +88,8 @@ function Set-TargetResource
         {
             Write-Verbose -Message ($LocalizedData.TimezoneAlreadySetMessage `
                 -f $Timezone)
-        } # if
-    } # if
+        }
+    }
 }
 
 
@@ -119,7 +119,7 @@ function Test-TargetResource
     else
     {
         return $false
-    } # if
+    }
 }
 
 Export-ModuleMember -Function *-TargetResource

@@ -31,6 +31,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
              Converted Get-Timezone to use CIM cmdlets.
              Added support for Set-Timezone to use .NET reflection if possible.
              Added message localization support.
+             Changed Integration tests so that a complete test occurs if the System time is already set to 'Pacific Standard Time'.
 * Copied SetTimeZone.ps1 example into Readme.md.
 * AppVeyor build machine set to WMF5.
 

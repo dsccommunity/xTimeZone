@@ -21,6 +21,8 @@ $TestEnvironment = Initialize-TestEnvironment `
 
 # Store the test machine timezone
 $CurrentTimeZone = & tzutil.exe /g
+# Change the current timezone so that a complete test occurs.
+tzutil.exe /s 'Eastern Standard Time'
 
 # Using try/finally to always cleanup even if something awful happens.
 try

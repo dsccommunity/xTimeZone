@@ -5,4 +5,5 @@ ConvertFrom-StringData -StringData @'
     SettingTimezonedotNetMessage=Setting Timezone to '{0}' using .NET
     SettingTimezoneTzUtilMessage=Setting Timezone to '{0}' using TZUTIL.EXE
     TimezoneUpdatedMessage=Timezone has been updated to '{0}'
+    AddingSetTimeZonedotNetTypeMessage=Adding .NET Set Timezone Type
 '@
