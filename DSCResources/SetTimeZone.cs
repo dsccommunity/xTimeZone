@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Security;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
-namespace TimeZoneHelper
+namespace Microsoft.PowerShell.xTimeZone
 {
     [StructLayoutAttribute(LayoutKind.Sequential)]
     public struct SystemTime
@@ -247,23 +248,19 @@ namespace TimeZoneHelper
             }
             int lastError = Marshal.GetLastWin32Error();
             TokenPrivilegesAccess.DisablePrivilege("SeTimeZonePrivilege");
-            if (didSet)
-            {
-                Console.WriteLine("Timezone Updated.");
-            }
-            else
+            if (! didSet)
             {
                 if (lastError == TimeZone.ERROR_ACCESS_DENIED)
                 {
-                    Console.WriteLine("Error: Access denied... Try running application as administrator.");
+                    throw new SecurityException("Access denied changing System Timezone.");
                 }
                 else if (lastError == TimeZone.CORSEC_E_MISSING_STRONGNAME)
                 {
-                    Console.WriteLine("Error: Application is not signed ... Right click the project > Signing > Check 'Sign the assembly'.");
+                    throw new SystemException("Application is not signed.");
                 }
                 else
                 {
-                    Console.WriteLine("Win32Error: " + lastError + "\nHRESULT: " + Marshal.GetHRForLastWin32Error());
+                    throw new SystemException("Win32Error: " + lastError + "\nHRESULT: " + Marshal.GetHRForLastWin32Error());
                 }
             }
         }

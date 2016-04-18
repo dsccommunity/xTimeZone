@@ -109,5 +109,5 @@ function Set-TimeZoneUsingNET {
         [System.String]
         $TimeZone
     )
-    [TimeZoneHelper.TimeZone]::Set($TimeZone)
+    [Microsoft.PowerShell.xTimeZone.TimeZone]::Set($TimeZone)
 }
