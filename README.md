@@ -22,6 +22,8 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### Unreleased
 
+### 1.4.0.0
+
 * xTimeZone: Unit tests updated to use standard test template.
              Added Integration tests.
              Resource code updated to match style guidelines.
