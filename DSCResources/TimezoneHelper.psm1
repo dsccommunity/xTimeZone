@@ -36,7 +36,7 @@ function Get-TimeZone
 {
     [CmdletBinding()]
     param()
-    
+
     Write-Verbose -Message ($LocalizedData.GettingTimezoneCimMessage)
 
     $TimeZone = (Get-CimInstance `
@@ -58,7 +58,8 @@ function Get-TimeZoneId
         $TimeZone
     )
     # Convert TimeZone Standard Name to TimeZone Id
-    $timeZoneInfo = [System.TimeZoneInfo]::GetSystemTimeZones() | Where-Object StandardName -eq $TimeZone
+    $timeZoneInfo = [System.TimeZoneInfo]::GetSystemTimeZones() |
+        Where-Object StandardName -eq $TimeZone
 
     return $timeZoneInfo.Id
 }

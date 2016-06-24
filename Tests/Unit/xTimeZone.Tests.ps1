@@ -16,7 +16,7 @@ Import-Module (Join-Path -Path $moduleRoot -ChildPath 'DSCResource.Tests\TestHel
 $TestEnvironment = Initialize-TestEnvironment `
     -DSCModuleName $Global:DSCModuleName `
     -DSCResourceName $Global:DSCResourceName `
-    -TestType Unit 
+    -TestType Unit
 #endregion
 
 # Begin Testing
@@ -37,7 +37,7 @@ try
             Mock -ModuleName xTimeZone -CommandName Get-TimeZone -MockWith {
                 Write-Output 'Pacific Standard Time'
             }
-            
+
             $TimeZone = Get-TargetResource `
                 -TimeZone 'Pacific Standard Time' `
                 -IsSingleInstance 'Yes'
@@ -45,7 +45,7 @@ try
             It 'Should return hashtable with Key TimeZone'{
                 $TimeZone.ContainsKey('TimeZone') | Should Be $true
             }
-            
+
             It 'Should return hashtable with Value that matches "Pacific Standard Time"'{
                 $TimeZone.TimeZone = 'Pacific Standard Time'
             }
@@ -82,7 +82,7 @@ try
         }
 
         Describe "$($Global:DSCResourceName)\Test-TargetResource" {
-            Mock -ModuleName xTimeZone -CommandName Get-TimeZone -MockWith {
+            Mock -ModuleName TimeZoneHelper -CommandName Get-TimeZone -MockWith {
                 Write-Output 'Pacific Standard Time'
             }
 
