@@ -46,7 +46,7 @@ function Get-TargetResource
     )
 
     #Get the current TimeZone
-    $CurrentTimeZone = Get-TimeZone
+    $CurrentTimeZone = Get-TimeZoneId -TimeZone (Get-TimeZone)
 
     $returnValue = @{
         TimeZone = $CurrentTimeZone
@@ -109,20 +109,7 @@ function Test-TargetResource
         [String]
         $TimeZone
     )
-
-    $CurrentTimeZone = Get-TimeZone
-
-    if($TimeZone -eq $CurrentTimeZone)
-    {
-        return $true
-    }
-    else
-    {
-        return $false
-    }
+    return Test-TimeZone -ExpectTimeZoneId $TimeZone
 }
 
 Export-ModuleMember -Function *-TargetResource
-
-
-

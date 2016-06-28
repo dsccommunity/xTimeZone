@@ -19,6 +19,37 @@ InModuleScope TimezoneHelper {
 
         }
     }
+    Describe 'Get-TimezoneId' {
+        Context "Test Timezone where standard name is different to Id" {
+            It "Should return 'Russia Time Zone 11'" {
+                Get-TimezoneId -Timezone 'Russia TZ 11 Standard Time' | Should Be 'Russia Time Zone 11'
+            }
+        }
+        Context "Test Timezone where standard name is the same as Id" {
+            It "Should return 'GMT Standard Time'" {
+                Get-TimezoneId -Timezone 'GMT Standard Time' | Should Be 'GMT Standard Time'
+            }
+        }
+        Context "Test Timezone that does not exist" {
+            It "Should return Empty" {
+                Get-TimezoneId -Timezone 'Wonderland Time' | Should BeNullOrEmpty
+            }
+        }
+    }
+    Describe 'Test-Timezone' {
+        Mock Get-TimeZone -MockWith { 'Russia TZ 11 Standard Time' }
+        Context "Current timezone matches desired timezone" {
+            It "Should return True" {
+                Test-Timezone -ExpectTimeZoneId 'Russia Time Zone 11' | Should Be $True
+            }
+        }
+        Context "Current timezone does not match desired timezone" {
+            It "Should return False" {
+                Test-Timezone -ExpectTimeZoneId 'GMT Standard Time' | Should Be $False
+            }
+        }
+    }
+
     Describe 'Set-Timezone' {
         Context "'Add-Type' is not available, Tzutil Returns 0" {
             Mock -CommandName Get-Command
