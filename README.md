@@ -6,6 +6,9 @@ The **xTimeZone** module the **xTimeZone** DSC resource for setting the timezone
 The resource will use CIM to retrieve the current timezone and use .NET reflection to update the timezone if required.
 If .NET reflection is not supported on the node (in the case of Nano Server) then tzutil.exe will be used to set the timezone.
 
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
+For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
 ## Contributing
 
 Please check out common DSC Resources [contributing guidelines](https://github.com/PowerShell/DscResource.Kit/blob/master/CONTRIBUTING.md).
@@ -21,6 +24,9 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 ## Versions
 
 ### Unreleased
+
+### 1.5.0.0
+* Fixed localization problem with DSC configuration Test/Get
 
 ### 1.4.0.0
 
