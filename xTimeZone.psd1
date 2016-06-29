@@ -1,7 +1,7 @@
 @{
 
 # Version number of this module.
-ModuleVersion = '1.4.0.0'
+ModuleVersion = '1.5.0.0'
 
 # ID used to uniquely identify this module
 GUID = 'd75e53f2-47fc-4ee7-97af-8d257d3e0151'
@@ -51,18 +51,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = '* xTimeZone: Unit tests updated to use standard test template.
-             Added Integration tests.
-             Resource code updated to match style guidelines.
-             Get-TargetResource returns IsSingleInstance value.
-             Moved Get-Timezone and Set-Timezone to TimezoneHelper.psm1
-             Added unit tests for TimezoneHelper.psm1
-             Converted Get-Timezone to use CIM cmdlets.
-             Added support for Set-Timezone to use .NET reflection if possible.
-             Added message localization support.
-             Changed Integration tests so that a complete test occurs if the System time is already set to Pacific Standard Time.
-* Copied SetTimeZone.ps1 example into Readme.md.
-* AppVeyor build machine set to WMF5.
+        ReleaseNotes = '* Fixed localization problem with DSC configuration Test/Get
 
 '
 
@@ -70,4 +59,5 @@ PrivateData = @{
 
 } # End of PrivateData hashtable
 }
+
 
