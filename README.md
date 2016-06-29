@@ -24,6 +24,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 ## Versions
 
 ### Unreleased
+* Fixed localization problem with DSC configuration Test/Get
 
 ### 1.4.0.0
 
