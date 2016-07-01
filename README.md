@@ -25,6 +25,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### Unreleased
 * Converted AppVeyor.yml to pull Pester from PSGallery instead of Chocolatey
+* Changed AppVeyor.yml to use default image
 
 ### 1.5.0.0
 * Fixed localization problem with DSC configuration Test/Get
