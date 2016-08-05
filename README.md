@@ -24,8 +24,14 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 ## Versions
 
 ### Unreleased
+* Add support for Nano Server and WMF5.1 via Get-Timezone/Set-Timezone cmdlets.
+* Minor changes to bring make resource ready for HQRM.
+* Renamed and reworked functions in TimezoneHelper.psm1 to prevent conflicts with new built-in WMF5.1 Timezone Cmdlets.
+* Fixed localization so that failback to en-US if culture specific language files not available.
 * Converted AppVeyor.yml to pull Pester from PSGallery instead of Chocolatey
 * Changed AppVeyor.yml to use default image
+* Moved code to init C# type into Set-TimeZoneUsingNET functions
+* Renamed internal Timezone parameters to TimezoneId to more clearly represent value
 
 ### 1.5.0.0
 * Fixed localization problem with DSC configuration Test/Get
