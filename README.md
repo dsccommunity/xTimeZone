@@ -32,6 +32,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 * Renamed internal Timezone parameters to TimezoneId to more clearly represent value
 * Converted AppVeyor.yml to pull Pester from PSGallery instead of Chocolatey
 * Changed AppVeyor.yml to use default image
+* Add Test-Command function to TimezoneHelper.psm1 for determining if a cmdlet exists.
 
 ### 1.5.0.0
 * Fixed localization problem with DSC configuration Test/Get
