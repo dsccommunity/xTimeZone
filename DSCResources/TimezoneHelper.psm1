@@ -50,12 +50,7 @@ function Get-TimeZoneId
     [CmdletBinding()]
     param()
 
-    $GetTimezoneCommand = Get-Command `
-        -Module Microsoft.PowerShell.Management `
-        -Name Get-Timezone `
-        -ErrorAction SilentlyContinue
-
-    if ($GetTimezoneCommand)
+    if (Test-Command -Name 'Get-Timezone' -Module 'Microsoft.PowerShell.Management')
     {
         Write-Verbose -Message ($LocalizedData.GettingTimezoneMessage -f 'Cmdlets')
 
@@ -110,22 +105,13 @@ function Set-TimeZoneId
         $TimeZoneId
     )
 
-    $SetTimezoneCommand = Get-Command `
-        -Module Microsoft.PowerShell.Management `
-        -Name Set-Timezone `
-        -ErrorAction SilentlyContinue
-
-    if ($SetTimezoneCommand)
+    if (Test-Command -Name 'Set-Timezone' -Module 'Microsoft.PowerShell.Management')
     {
         Set-Timezone -Id $TimezoneId
     }
     else
     {
-        $AddTypeCommand = Get-Command `
-            -Module Microsoft.Powershell.Utility `
-            -Name Add-Type `
-            -ErrorAction SilentlyContinue
-        if ($AddTypeCommand)
+        if (Test-Command -Name 'Add-Type' -Module 'Microsoft.Powershell.Utility')
         {
             # We can use Reflection to modify the TimeZone
             Write-Verbose -Message ($LocalizedData.SettingTimezoneMessage `
@@ -180,4 +166,24 @@ function Set-TimeZoneUsingNET {
     } # if
 
     [Microsoft.PowerShell.xTimeZone.TimeZone]::Set($TimeZoneId)
-} # function Set-TimeZoneUsingNET {
+} # function Set-TimeZoneUsingNET
+
+<#
+    .SYNOPSIS
+    This function tests if a cmdlet exists.
+#>
+function Test-Command {
+    [CmdletBinding()]
+    [OutputType([boolean])]
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.String]
+        $Name,
+
+        [Parameter(Mandatory = $true)]
+        [System.String]
+        $Module
+    )
+
+    return ($null -ne (Get-Command @PSBoundParameters -ErrorAction SilentlyContinue))
+} # function Test-Command

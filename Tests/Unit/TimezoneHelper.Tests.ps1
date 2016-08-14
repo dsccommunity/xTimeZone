@@ -112,4 +112,52 @@ InModuleScope TimezoneHelper {
             }
         }
     }
+
+    Describe 'Test-Command' {
+        Context "Command 'Get-Timezone' exists" {
+            Mock -CommandName Get-Command `
+                -ParameterFilter {
+                    $Name -eq 'Get-Timezone' -and `
+                    $Module -eq 'Microsoft.PowerShell.Management'
+                } `
+                -MockWith { @{ Name = 'Get-Timezone' } }
+            It "Should not throw exception" {
+                Test-Command `
+                    -Name 'Get-Timezone' `
+                    -Module 'Microsoft.PowerShell.Management' | Should Be $True
+            }
+            It "Should call expected mocks" {
+                Assert-MockCalled `
+                    -CommandName Get-Command `
+                    -ParameterFilter {
+                        $Name -eq 'Get-Timezone' -and `
+                        $Module -eq 'Microsoft.PowerShell.Management'
+                    } `
+                    -Exactly 1
+            }
+        }
+
+        Context "Command 'Get-Timezone' does not exist" {
+            Mock -CommandName Get-Command `
+                -ParameterFilter {
+                    $Name -eq 'Get-Timezone' -and `
+                    $Module -eq 'Microsoft.PowerShell.Management'
+                } `
+                -MockWith { }
+            It "Should not throw exception" {
+                Test-Command `
+                    -Name 'Get-Timezone' `
+                    -Module 'Microsoft.PowerShell.Management' | Should Be $False
+            }
+            It "Should call expected mocks" {
+                Assert-MockCalled `
+                    -CommandName Get-Command `
+                    -ParameterFilter {
+                        $Name -eq 'Get-Timezone' -and `
+                        $Module -eq 'Microsoft.PowerShell.Management'
+                    } `
+                    -Exactly 1
+            }
+        }
+    }
 }
