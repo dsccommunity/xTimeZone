@@ -34,9 +34,10 @@ try
         }
 
         Describe "$($Global:DSCResourceName)\Get-TargetResource" {
-            Mock -ModuleName xTimeZone -CommandName Get-TimeZone -MockWith {
-                Write-Output 'Pacific Standard Time'
-            }
+            Mock `
+                -ModuleName xTimezone `
+                -CommandName Get-TimeZoneId `
+                -MockWith { 'Pacific Standard Time' }
 
             $TimeZone = Get-TargetResource `
                 -TimeZone 'Pacific Standard Time' `
@@ -52,22 +53,25 @@ try
         }
 
         Describe "$($Global:DSCResourceName)\Set-TargetResource" {
-            Mock -ModuleName xTimeZone -CommandName Set-TimeZone -MockWith {
-                Write-Output $true
-            }
+            Mock `
+                -ModuleName xTimezone `
+                -CommandName Set-TimeZoneId
+            Mock `
+                -ModuleName xTimezone `
+                -CommandName Get-TimeZoneId `
+                -MockWith { 'Eastern Standard Time' }
 
-            Mock -ModuleName xTimeZone -CommandName Get-TimeZone -MockWith {
-                Write-Output 'Eastern Standard Time'
-            }
-
-            It 'Call Set-TimeZone' {
-                Set-TargetResource -TimeZone 'Pacific Standard Time' -IsSingleInstance 'Yes'
+            It 'Call Set-TimeZoneId' {
+                Set-TargetResource `
+                    -TimeZone 'Pacific Standard Time' `
+                    -IsSingleInstance 'Yes'
                 Assert-MockCalled `
-                    -CommandName Set-TimeZone `
+                    -CommandName Set-TimeZoneId `
+                    -ModuleName xTimezone `
                     -Exactly 1
             }
 
-            It 'Should not call Set-TimeZone when Current TimeZone already set to desired State'{
+            It 'Should not call Set-TimeZoneId when Current TimeZone already set to desired State'{
                 $SystemTimeZone = Get-TargetResource `
                     -TimeZone 'Eastern Standard Time' `
                     -IsSingleInstance 'Yes'
@@ -75,16 +79,18 @@ try
                     -TimeZone $SystemTimeZone.TimeZone `
                     -IsSingleInstance 'Yes'
                 Assert-MockCalled `
-                    -CommandName Set-TimeZone `
+                    -CommandName Set-TimeZoneId `
+                    -ModuleName xTimezone `
                     -Scope It `
                     -Exactly 0
             }
         }
 
         Describe "$($Global:DSCResourceName)\Test-TargetResource" {
-            Mock -ModuleName TimeZoneHelper -CommandName Get-TimeZone -MockWith {
-                Write-Output 'Pacific Standard Time'
-            }
+            Mock `
+                -ModuleName TimezoneHelper `
+                -CommandName Get-TimeZoneId `
+                -MockWith { 'Pacific Standard Time' }
 
             It 'Should return true when Test is passed Time Zone thats already set'{
                 Test-TargetResource `
