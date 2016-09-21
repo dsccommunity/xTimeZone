@@ -7,7 +7,7 @@ ModuleVersion = '1.6.0.0'
 GUID = 'd75e53f2-47fc-4ee7-97af-8d257d3e0151'
 
 # Author of this module
-Author = 'OneScript Team'
+Author = 'Microsoft Corporation'
 
 # Company or vendor of this module
 CompanyName = 'Microsoft Corporation'
@@ -22,7 +22,7 @@ Description = 'This DSC Resources can easily set the System Time Zone.'
 PowerShellVersion = '4.0'
 
 # Functions to export from this module
-FunctionsToExport = 'Get-TargetResource', 'Test-TargetResource', 'Set-TargetResource'
+# FunctionsToExport = ''
 
 # Cmdlets to export from this module
 CmdletsToExport = '*'
