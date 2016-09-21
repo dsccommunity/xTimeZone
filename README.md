@@ -24,6 +24,8 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 ## Versions
 
 ### Unreleased
+
+### 1.6.0.0
 * Add support for Nano Server and WMF5.1 via Get-Timezone/Set-Timezone cmdlets.
 * Minor changes to bring make resource ready for HQRM.
 * Renamed and reworked functions in TimezoneHelper.psm1 to prevent conflicts with new built-in WMF5.1 Timezone Cmdlets.

@@ -1,7 +1,7 @@
 @{
 
 # Version number of this module.
-ModuleVersion = '1.5.0.0'
+ModuleVersion = '1.6.0.0'
 
 # ID used to uniquely identify this module
 GUID = 'd75e53f2-47fc-4ee7-97af-8d257d3e0151'
@@ -51,13 +51,16 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = '* Fixed localization problem with DSC configuration Test/Get
-
-'
+        ReleaseNotes = '* Add support for Nano Server and WMF5.1 via Get-Timezone/Set-Timezone cmdlets.
+* Minor changes to bring make resource ready for HQRM.
+* Renamed and reworked functions in TimezoneHelper.psm1 to prevent conflicts with new built-in WMF5.1 Timezone Cmdlets.
+* Fixed localization so that failback to en-US if culture specific language files not available.
+* Moved code to init C'
 
     } # End of PSData hashtable
 
 } # End of PrivateData hashtable
 }
+
 
 
