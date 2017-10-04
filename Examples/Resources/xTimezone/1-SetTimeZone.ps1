@@ -9,7 +9,7 @@ Configuration Example
     (
         [Parameter()]
         [System.String[]]
-        $NodeName = 'localhost',
+        $NodeName = 'localhost'
     )
 
     Import-DSCResource -ModuleName xTimeZone

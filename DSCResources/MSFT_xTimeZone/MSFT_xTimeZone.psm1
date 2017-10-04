@@ -42,6 +42,8 @@ function Get-TargetResource
         $TimeZone
     )
 
+    Write-Verbose -Message ($LocalizedData.GettingTimezoneMessage)
+
     # Get the current TimeZone Id
     $currentTimeZone = Get-TimeZoneId
 
@@ -82,18 +84,15 @@ function Set-TargetResource
 
     $currentTimeZone = Get-TimeZoneId
 
-    if ($PSCmdlet.ShouldProcess("'$TimeZone'", $LocalizedData.ReplaceSystemTimezoneMessage))
+    if ($currentTimeZone -ne $TimeZone)
     {
-        if ($currentTimeZone -ne $TimeZone)
-        {
-            Write-Verbose -Message ($LocalizedData.SettingTimezoneMessage)
-            Set-TimeZoneId -TimeZone $TimeZone
-        }
-        else
-        {
-            Write-Verbose -Message ($LocalizedData.TimezoneAlreadySetMessage `
-                    -f $Timezone)
-        }
+        Write-Verbose -Message ($LocalizedData.SettingTimezoneMessage)
+        Set-TimeZoneId -TimeZone $TimeZone
+    }
+    else
+    {
+        Write-Verbose -Message ($LocalizedData.TimezoneAlreadySetMessage `
+                -f $Timezone)
     }
 }
 
@@ -123,6 +122,8 @@ function Test-TargetResource
         [System.String]
         $TimeZone
     )
+
+    Write-Verbose -Message ($LocalizedData.TestingTimezoneMessage)
 
     return Test-TimeZoneId -TimeZoneId $TimeZone
 }
