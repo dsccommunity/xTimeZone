@@ -1,49 +1,16 @@
-#region localizeddata
-if (Test-Path "${PSScriptRoot}\${PSUICulture}")
-{
-    Import-LocalizedData `
-        -BindingVariable LocalizedData `
-        -Filename TimezoneHelper.psd1 `
-        -BaseDirectory "${PSScriptRoot}\${PSUICulture}"
-}
-else
-{
-    #fallback to en-US
-    Import-LocalizedData `
-        -BindingVariable LocalizedData `
-        -Filename TimezoneHelper.psd1 `
-        -BaseDirectory "${PSScriptRoot}\en-US"
-}
-#endregion
+# Import the Networking Resource Helper Module
+Import-Module -Name (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) `
+-ChildPath (Join-Path -Path 'TimezoneDsc.ResourceHelper' `
+                      -ChildPath 'TimezoneDsc.ResourceHelper.psm1'))
+
+# Import Localization Strings
+$script:localizedData = Get-LocalizedData `
+    -ResourceName 'TimezoneDsc.Common' `
+    -ResourcePath $PSScriptRoot
 
 <#
     .SYNOPSIS
-    Internal function to throw terminating error with specified errroCategory, errorId and errorMessage
-#>
-function New-TerminatingError
-{
-    [CmdletBinding()]
-    param
-    (
-        [Parameter(Mandatory)]
-        [String] $ErrorId,
-
-        [Parameter(Mandatory)]
-        [String] $ErrorMessage,
-
-        [Parameter(Mandatory)]
-        [System.Management.Automation.ErrorCategory] $ErrorCategory
-    )
-
-    $exception = New-Object System.InvalidOperationException $errorMessage
-    $errorRecord = New-Object System.Management.Automation.ErrorRecord $exception, $errorId, $errorCategory, $null
-    throw $errorRecord
-} # function New-TerminatingError
-
-<#
-    .SYNOPSIS
-    Get the of the current timezone Id.
-
+        Get the of the current timezone Id.
 #>
 function Get-TimeZoneId
 {
@@ -76,7 +43,7 @@ function Get-TimeZoneId
 
 <#
     .SYNOPSIS
-    Compare a timezone Id with the current timezone Id
+        Compare a timezone Id with the current timezone Id
 #>
 function Test-TimeZoneId
 {
@@ -94,7 +61,7 @@ function Test-TimeZoneId
 
 <#
     .SYNOPSIS
-    Sets the current timezone using a timezone Id
+        Sets the current timezone using a timezone Id
 #>
 function Set-TimeZoneId
 {
@@ -143,9 +110,10 @@ function Set-TimeZoneId
 
 <#
     .SYNOPSIS
-    This function exists so that the ::Set method can be mocked by Pester.
+        This function exists so that the ::Set method can be mocked by Pester.
 #>
-function Set-TimeZoneUsingNET {
+function Set-TimeZoneUsingNET
+{
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]
@@ -170,11 +138,12 @@ function Set-TimeZoneUsingNET {
 
 <#
     .SYNOPSIS
-    This function tests if a cmdlet exists.
+        This function tests if a cmdlet exists.
 #>
-function Test-Command {
+function Test-Command
+{
     [CmdletBinding()]
-    [OutputType([boolean])]
+    [OutputType([System.Boolean])]
     param(
         [Parameter(Mandatory = $true)]
         [System.String]
@@ -187,3 +156,11 @@ function Test-Command {
 
     return ($null -ne (Get-Command @PSBoundParameters -ErrorAction SilentlyContinue))
 } # function Test-Command
+
+Export-ModuleMember -Function @(
+    'Get-TimeZoneId'
+    'Test-TimeZoneId'
+    'Set-TimeZoneId'
+    'Set-TimeZoneUsingNET'
+    'Test-Command'
+)
