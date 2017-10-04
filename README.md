@@ -36,7 +36,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ## Resources
 
-### xTimeZone
+### xTimeZone Resource
 
 * **TimeZone**: Specifies the Time Zone. To discover all valid time zones for
   this property, use this PowerShell command: `[System.TimeZoneInfo]::GetSystemTimeZones().Id`.
