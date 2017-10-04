@@ -45,7 +45,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### xTimeZone Examples
 
-* [Set the Timezone of the computer](/Examples/xTimeZone/1-SetTimeZone.ps1)
+* [Set the Timezone of the computer](/Examples/Resources/xTimeZone/1-SetTimeZone.ps1)
 
 ## Versions
 
