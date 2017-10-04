@@ -1,7 +1,7 @@
 # Import the Networking Resource Helper Module
 Import-Module -Name (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) `
--ChildPath (Join-Path -Path 'TimezoneDsc.ResourceHelper' `
-                      -ChildPath 'TimezoneDsc.ResourceHelper.psm1'))
+        -ChildPath (Join-Path -Path 'TimezoneDsc.ResourceHelper' `
+            -ChildPath 'TimezoneDsc.ResourceHelper.psm1'))
 
 # Import Localization Strings
 $script:localizedData = Get-LocalizedData `
@@ -28,12 +28,12 @@ function Get-TimeZoneId
         Write-Verbose -Message ($LocalizedData.GettingTimezoneMessage -f 'CIM')
 
         $TimeZone = (Get-CimInstance `
-            -ClassName WIN32_Timezone `
-            -Namespace root\cimv2).StandardName
+                -ClassName WIN32_Timezone `
+                -Namespace root\cimv2).StandardName
     }
 
     Write-Verbose -Message ($LocalizedData.CurrentTimezoneMessage `
-        -f $Timezone)
+            -f $Timezone)
 
     $timeZoneInfo = [System.TimeZoneInfo]::GetSystemTimeZones() |
         Where-Object StandardName -eq $TimeZone
@@ -43,7 +43,10 @@ function Get-TimeZoneId
 
 <#
     .SYNOPSIS
-        Compare a timezone Id with the current timezone Id
+        Compare a timezone Id with the current timezone Id.
+
+    .PARAMETER TimeZoneId
+        The Id of the Timezone to compare with the current timezone.
 #>
 function Test-TimeZoneId
 {
@@ -53,6 +56,7 @@ function Test-TimeZoneId
         [System.String]
         $TimeZoneId
     )
+
     # Test Expected is same as Current
     $currentTimeZoneId = Get-TimeZoneId
 
@@ -61,7 +65,10 @@ function Test-TimeZoneId
 
 <#
     .SYNOPSIS
-        Sets the current timezone using a timezone Id
+        Sets the current timezone using a timezone Id.
+
+    .PARAMETER TimeZoneId
+        The Id of the Timezone to set.
 #>
 function Set-TimeZoneId
 {
@@ -82,7 +89,7 @@ function Set-TimeZoneId
         {
             # We can use Reflection to modify the TimeZone
             Write-Verbose -Message ($LocalizedData.SettingTimezoneMessage `
-                -f $TimeZoneId,'.NET')
+                    -f $TimeZoneId, '.NET')
 
             Set-TimeZoneUsingNET -TimezoneId $TimeZoneId
         }
@@ -90,27 +97,31 @@ function Set-TimeZoneId
         {
             # For anything else use TZUTIL.EXE
             Write-Verbose -Message ($LocalizedData.SettingTimezoneMessage `
-                -f $TimeZoneId,'TZUTIL.EXE')
+                    -f $TimeZoneId, 'TZUTIL.EXE')
 
             try
             {
-                & tzutil.exe @('/s',$TimeZoneId)
+                & tzutil.exe @('/s', $TimeZoneId)
             }
             catch
             {
-                $ErrorMsg = $_.Exception.Message
-                Write-Verbose -Message $ErrorMsg
+                $errorMsg = $_.Exception.Message
+
+                Write-Verbose -Message $errorMsg
             } # try
         } # if
     } # if
 
     Write-Verbose -Message ($LocalizedData.TimezoneUpdatedMessage `
-        -f $TimeZone)
+            -f $TimeZone)
 } # function Set-TimeZoneId
 
 <#
     .SYNOPSIS
         This function exists so that the ::Set method can be mocked by Pester.
+
+    .PARAMETER TimeZoneId
+        The Id of the Timezone to set using .NET
 #>
 function Set-TimeZoneUsingNET
 {
@@ -125,12 +136,14 @@ function Set-TimeZoneUsingNET
     if (-not ([System.Management.Automation.PSTypeName]'TimeZoneHelper.TimeZone').Type)
     {
         Write-Verbose -Message ($LocalizedData.AddingSetTimeZonedotNetTypeMessage)
-        $SetTimeZoneCs = Get-Content `
+
+        $setTimeZoneCs = Get-Content `
             -Path (Join-Path -Path $PSScriptRoot -ChildPath 'SetTimeZone.cs') `
             -Raw
+
         Add-Type `
             -Language CSharp `
-            -TypeDefinition $SetTimeZoneCs
+            -TypeDefinition $setTimeZoneCs
     } # if
 
     [Microsoft.PowerShell.xTimeZone.TimeZone]::Set($TimeZoneId)
@@ -139,6 +152,12 @@ function Set-TimeZoneUsingNET
 <#
     .SYNOPSIS
         This function tests if a cmdlet exists.
+
+    .PARAMETER Name
+        The name of the cmdlet to check for.
+
+    .PARAMETER Module
+        The module containing the command.
 #>
 function Test-Command
 {
