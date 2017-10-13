@@ -18,39 +18,39 @@ Import-Module (Join-Path -Path (Join-Path -Path $script:moduleRoot -ChildPath (J
 #region Pester Tests
 InModuleScope $script:ModuleName {
     Describe 'Get-TimeZoneId' {
-        Context "'Get-TimeZone' not available and Current Timezone is set to 'Pacific Standard Time'" {
+        Context '"Get-TimeZone" not available and Current Timezone is set to "Pacific Standard Time"' {
             Mock -CommandName Get-Command -ParameterFilter { $Name -eq 'Get-TimeZone' }
             Mock -CommandName Get-CimInstance -MockWith {
                 @{ StandardName = 'Pacific Standard Time' }
             }
 
-            It "Returns 'Pacific Standard Time'." {
+            It 'Returns "Pacific Standard Time"' {
                 Get-TimeZoneId | should be 'Pacific Standard Time'
             }
 
-            It "Should call expected mocks" {
-                Assert-MockCalled -CommandName Get-Command -ParameterFilter { $Name -eq 'Get-TimeZone' } -Exactly 1
-                Assert-MockCalled -CommandName Get-CimInstance -Exactly 1
+            It 'Should call expected mocks' {
+                Assert-MockCalled -CommandName Get-Command -ParameterFilter { $Name -eq 'Get-TimeZone' } -Exactly -Times 1
+                Assert-MockCalled -CommandName Get-CimInstance -Exactly -Times 1
             }
         }
 
-        Context "'Get-TimeZone' not available and Current Timezone is set to 'Russia TZ 11 Standard Time'" {
+        Context '"Get-TimeZone" not available and Current Timezone is set to "Russia TZ 11 Standard Time"' {
             Mock -CommandName Get-Command -ParameterFilter { $Name -eq 'Get-TimeZone' }
             Mock -CommandName Get-CimInstance -MockWith {
                 @{ StandardName = 'Russia TZ 11 Standard Time' }
             }
 
-            It "Returns 'Russia Time Zone 11'." {
+            It 'Returns "Russia Time Zone 11"' {
                 Get-TimeZoneId | should be 'Russia Time Zone 11'
             }
 
-            It "Should call expected mocks" {
-                Assert-MockCalled -CommandName Get-Command -ParameterFilter { $Name -eq 'Get-TimeZone' } -Exactly 1
-                Assert-MockCalled -CommandName Get-CimInstance -Exactly 1
+            It 'Should call expected mocks' {
+                Assert-MockCalled -CommandName Get-Command -ParameterFilter { $Name -eq 'Get-TimeZone' } -Exactly -Times 1
+                Assert-MockCalled -CommandName Get-CimInstance -Exactly -Times 1
             }
         }
 
-        Context "'Get-TimeZone' available and Current Timezone is set to 'Pacific Standard Time'" {
+        Context '"Get-TimeZone" available and Current Timezone is set to "Pacific Standard Time"' {
             Mock -CommandName Get-Command -ParameterFilter { $Name -eq 'Get-TimeZone' } -MockWith { 'Get-TimeZone' }
             function Get-TimeZone { param () }
 
@@ -58,13 +58,13 @@ InModuleScope $script:ModuleName {
                 @{ StandardName = 'Pacific Standard Time' }
             }
 
-            It "Returns 'Pacific Standard Time'." {
+            It 'Returns "Pacific Standard Time"' {
                 Get-TimeZoneId | should be 'Pacific Standard Time'
             }
 
-            It "Should call expected mocks" {
-                Assert-MockCalled -CommandName Get-Command -ParameterFilter { $Name -eq 'Get-TimeZone' } -Exactly 1
-                Assert-MockCalled -CommandName Get-TimeZone -Exactly 1
+            It 'Should call expected mocks' {
+                Assert-MockCalled -CommandName Get-Command -ParameterFilter { $Name -eq 'Get-TimeZone' } -Exactly -Times 1
+                Assert-MockCalled -CommandName Get-TimeZone -Exactly -Times 1
             }
         }
     }
@@ -72,78 +72,90 @@ InModuleScope $script:ModuleName {
     Describe 'Test-TimezoneId' {
         Mock Get-TimeZoneId -MockWith { 'Russia Time Zone 11' }
 
-        Context "Current timezone matches desired timezone" {
-            It "Should return True" {
+        Context 'Current timezone matches desired timezone' {
+            It 'Should return True' {
                 Test-TimezoneId -TimeZoneId 'Russia Time Zone 11' | Should Be $True
             }
         }
 
-        Context "Current timezone does not match desired timezone" {
-            It "Should return False" {
+        Context 'Current timezone does not match desired timezone' {
+            It 'Should return False' {
                 Test-TimezoneId -TimeZoneId 'GMT Standard Time' | Should Be $False
             }
         }
     }
 
     Describe 'Set-TimeZoneId' {
-        Context "'Set-TimeZone' and 'Add-Type' is not available, Tzutil Returns 0" {
+        Context '"Set-TimeZone" and "Add-Type" is not available, Tzutil Returns 0' {
             Mock -CommandName Get-Command -ParameterFilter { $Name -eq 'Add-Type' }
             Mock -CommandName Get-Command -ParameterFilter { $Name -eq 'Set-TimeZone' }
-            Mock -CommandName 'TzUtil.exe' -MockWith { $Global:LASTEXITCODE = 0; return "OK" }
+            Mock -CommandName 'TzUtil.exe' -MockWith {
+                $Global:LASTEXITCODE = 0
+                return 'OK'
+            }
             Mock -CommandName Add-Type
 
-            It "Should not throw exception" {
-                { Set-TimeZoneId -TimezoneId 'Eastern Standard Time' }  | Should Not Throw
+            It 'Should not throw exception' {
+                { Set-TimeZoneId -TimezoneId 'Eastern Standard Time' } | Should Not Throw
             }
 
-            It "Should call expected mocks" {
-                Assert-MockCalled -CommandName Get-Command -ParameterFilter { $Name -eq 'Add-Type' } -Exactly 1
-                Assert-MockCalled -CommandName Get-Command -ParameterFilter { $Name -eq 'Set-TimeZone' } -Exactly 1
-                Assert-MockCalled -CommandName TzUtil.exe -Exactly 1
-                Assert-MockCalled -CommandName Add-Type -Exactly 0
+            It 'Should call expected mocks' {
+                Assert-MockCalled -CommandName Get-Command -ParameterFilter { $Name -eq 'Add-Type' } -Exactly -Times 1
+                Assert-MockCalled -CommandName Get-Command -ParameterFilter { $Name -eq 'Set-TimeZone' } -Exactly -Times 1
+                Assert-MockCalled -CommandName TzUtil.exe -Exactly -Times 1
+                Assert-MockCalled -CommandName Add-Type -Exactly -Times 0
             }
         }
 
-        Context "'Set-TimeZone' is not available but 'Add-Type' is available" {
+        Context '"Set-TimeZone" is not available but "Add-Type" is available' {
             Mock -CommandName Get-Command -ParameterFilter { $Name -eq 'Add-Type' } -MockWith { 'Add-Type' }
             Mock -CommandName Get-Command -ParameterFilter { $Name -eq 'Set-TimeZone' }
-            Mock -CommandName 'TzUtil.exe' -MockWith { $Global:LASTEXITCODE = 0; return "OK" }
+            Mock -CommandName 'TzUtil.exe' -MockWith {
+                $Global:LASTEXITCODE = 0
+                return 'OK'
+            }
             Mock -CommandName Add-Type
             Mock -CommandName Set-TimeZoneUsingDotNet
 
-            It "Should throw exception" {
+            It 'Should throw exception' {
                 { Set-TimeZoneId -TimezoneId 'Eastern Standard Time' }  | Should Not Throw
             }
 
-            It "Should call expected mocks" {
-                Assert-MockCalled -CommandName Get-Command -ParameterFilter { $Name -eq 'Add-Type' } -Exactly 1
-                Assert-MockCalled -CommandName Get-Command -ParameterFilter { $Name -eq 'Set-TimeZone' } -Exactly 1
-                Assert-MockCalled -CommandName TzUtil.exe -Exactly 0
-                Assert-MockCalled -CommandName Add-Type -Exactly 0
-                Assert-MockCalled -CommandName Set-TimeZoneUsingDotNet -Exactly 1
+            It 'Should call expected mocks' {
+                Assert-MockCalled -CommandName Get-Command -ParameterFilter { $Name -eq 'Add-Type' } -Exactly -Times 1
+                Assert-MockCalled -CommandName Get-Command -ParameterFilter { $Name -eq 'Set-TimeZone' } -Exactly -Times 1
+                Assert-MockCalled -CommandName TzUtil.exe -Exactly -Times 0
+                Assert-MockCalled -CommandName Add-Type -Exactly -Times 0
+                Assert-MockCalled -CommandName Set-TimeZoneUsingDotNet -Exactly -Times 1
             }
         }
 
-        Context "'Set-TimeZone' is available" {
+        Context '"Set-TimeZone" is available' {
             Mock -CommandName Get-Command -ParameterFilter { $Name -eq 'Add-Type' }
             Mock -CommandName Get-Command -ParameterFilter { $Name -eq 'Set-TimeZone' } -MockWith { 'Set-TimeZone' }
-            function Set-TimeZone { param ( $id ) }
+            function Set-TimeZone {
+                param
+                (
+                    [System.String]
+                    $id
+                )
+            }
             Mock -CommandName Set-TimeZone
 
-            It "Should not throw exception" {
+            It 'Should not throw exception' {
                 { Set-TimeZoneId -TimezoneId 'Eastern Standard Time' }  | Should Not Throw
             }
 
-            It "Should call expected mocks" {
-                Assert-MockCalled -CommandName Get-Command -ParameterFilter { $Name -eq 'Add-Type' } -Exactly 0
-                Assert-MockCalled -CommandName Get-Command -ParameterFilter { $Name -eq 'Set-TimeZone' } -Exactly 1
-                Assert-MockCalled -CommandName Set-TimeZone -Exactly 1
+            It 'Should call expected mocks' {
+                Assert-MockCalled -CommandName Get-Command -ParameterFilter { $Name -eq 'Add-Type' } -Exactly -Times 0
+                Assert-MockCalled -CommandName Get-Command -ParameterFilter { $Name -eq 'Set-TimeZone' } -Exactly -Times 1
+                Assert-MockCalled -CommandName Set-TimeZone -Exactly -Times 1
             }
         }
     }
 
     Describe 'Test-Command' {
-        Context "Command 'Get-TimeZone' exists" {
+        Context 'Command "Get-TimeZone" exists' {
             Mock -CommandName Get-Command `
                 -ParameterFilter {
                     $Name -eq 'Get-TimeZone' -and `
@@ -151,24 +163,24 @@ InModuleScope $script:ModuleName {
                 } `
                 -MockWith { @{ Name = 'Get-TimeZone' } }
 
-            It "Should not throw exception" {
+            It 'Should not throw exception' {
                 Test-Command `
                     -Name 'Get-TimeZone' `
                     -Module 'Microsoft.PowerShell.Management' | Should Be $True
             }
 
-            It "Should call expected mocks" {
+            It 'Should call expected mocks' {
                 Assert-MockCalled `
                     -CommandName Get-Command `
                     -ParameterFilter {
                         $Name -eq 'Get-TimeZone' -and `
                         $Module -eq 'Microsoft.PowerShell.Management'
                     } `
-                    -Exactly 1
+                    -Exactly -Times 1
             }
         }
 
-        Context "Command 'Get-TimeZone' does not exist" {
+        Context 'Command "Get-TimeZone" does not exist' {
             Mock -CommandName Get-Command `
                 -ParameterFilter {
                     $Name -eq 'Get-TimeZone' -and `
@@ -176,20 +188,20 @@ InModuleScope $script:ModuleName {
                 } `
                 -MockWith { }
 
-            It "Should not throw exception" {
+            It 'Should not throw exception' {
                 Test-Command `
                     -Name 'Get-TimeZone' `
                     -Module 'Microsoft.PowerShell.Management' | Should Be $False
             }
 
-            It "Should call expected mocks" {
+            It 'Should call expected mocks' {
                 Assert-MockCalled `
                     -CommandName Get-Command `
                     -ParameterFilter {
                         $Name -eq 'Get-TimeZone' -and `
                         $Module -eq 'Microsoft.PowerShell.Management'
                     } `
-                    -Exactly 1
+                    -Exactly -Times 1
             }
         }
     }
