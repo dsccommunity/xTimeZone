@@ -1,10 +1,7 @@
 # xTimeZone
 
-The **xTimeZone** module the **xTimeZone** DSC resource for setting the timezone
-on a machine. The resource will use CIM to retrieve the current timezone and use
-.NET reflection to update the timezone if required. If .NET reflection is not
-supported on the node (in the case of Nano Server) then tzutil.exe will be used
-to set the timezone.
+The **xTimeZone** module contains the **xTimeZone** DSC resource for setting the
+time zone on a machine.
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/)
@@ -38,14 +35,20 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### xTimeZone Resource
 
-* **TimeZone**: Specifies the Time Zone. To discover all valid time zones for
+The resource will use the `Get-TimeZone` cmdlet to get the current
+time zone. If `Get-TimeZone` is not available them CIM will be used to retrieve
+the current time zone. To update the time zone, .NET reflection will be used to
+update the time zone if required. If .NET reflection is not supported on the node
+(in the case of Nano Server) then tzutil.exe will be used to set the time zone.
+
+* **TimeZone**: Specifies the time zone. To discover all valid time zones for
   this property, use this PowerShell command: `[System.TimeZoneInfo]::GetSystemTimeZones().Id`.
 * **IsSingleInstance**: Specifies if the resource is a single instance, the value
    must be 'Yes'.
 
 ### xTimeZone Examples
 
-* [Set the Timezone of the computer](/Examples/Resources/xTimeZone/1-SetTimeZone.ps1)
+* [Set the time zone of the computer](/Examples/Resources/xTimeZone/1-SetTimeZone.ps1)
 
 ## Versions
 
@@ -53,7 +56,7 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 * Added resource helper module.
 * Changed resource file names to include MSFT_*.
-* Added MSFT_ to MOF file classname
+* Added MSFT_ to MOF file classname.
 * Change examples to meet HQRM standards and optin to Example validation
   tests.
 * Replaced examples in README.MD to links to Example files.
@@ -70,13 +73,13 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
 
 ### 1.6.0.0
 
-* Add support for Nano Server and WMF5.1 via Get-Timezone/Set-Timezone cmdlets.
+* Add support for Nano Server and WMF5.1 via Get-TimeZone/Set-TimeZone cmdlets.
 * Minor changes to bring make resource ready for HQRM.
 * Renamed and reworked functions in TimezoneHelper.psm1 to prevent conflicts with
   new built-in WMF5.1 Timezone Cmdlets.
 * Fixed localization so that failback to en-US if culture specific language files
   not available.
-* Moved code to init C# type into Set-TimeZoneUsingNET functions
+* Moved code to init C# type into Set-TimeZoneUsingDotNet functions
 * Renamed internal Timezone parameters to TimezoneId to more clearly represent value
 * Converted AppVeyor.yml to pull Pester from PSGallery instead of Chocolatey
 * Changed AppVeyor.yml to use default image
@@ -92,10 +95,10 @@ Please check out common DSC Resources [contributing guidelines](https://github.c
              Added Integration tests.
              Resource code updated to match style guidelines.
              Get-TargetResource returns IsSingleInstance value.
-             Moved Get-Timezone and Set-Timezone to TimezoneHelper.psm1
+             Moved Get-TimeZone and Set-TimeZone to TimezoneHelper.psm1
              Added unit tests for TimezoneHelper.psm1
-             Converted Get-Timezone to use CIM cmdlets.
-             Added support for Set-Timezone to use .NET reflection if possible.
+             Converted Get-TimeZone to use CIM cmdlets.
+             Added support for Set-TimeZone to use .NET reflection if possible.
              Added message localization support.
              Changed Integration tests so that a complete test occurs if the
              System time is already set to 'Pacific Standard Time'.

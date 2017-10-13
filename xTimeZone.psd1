@@ -51,7 +51,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = '* Add support for Nano Server and WMF5.1 via Get-Timezone/Set-Timezone cmdlets.
+        ReleaseNotes = '* Add support for Nano Server and WMF5.1 via Get-TimeZone/Set-TimeZone cmdlets.
 * Minor changes to bring make resource ready for HQRM.
 * Renamed and reworked functions in TimezoneHelper.psm1 to prevent conflicts with new built-in WMF5.1 Timezone Cmdlets.
 * Fixed localization so that failback to en-US if culture specific language files not available.

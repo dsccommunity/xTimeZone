@@ -1,63 +1,66 @@
 # Import the Networking Resource Helper Module
 Import-Module -Name (Join-Path -Path (Split-Path -Path $PSScriptRoot -Parent) `
-        -ChildPath (Join-Path -Path 'TimezoneDsc.ResourceHelper' `
-            -ChildPath 'TimezoneDsc.ResourceHelper.psm1'))
+        -ChildPath (Join-Path -Path 'TimeZoneDsc.ResourceHelper' `
+            -ChildPath 'TimeZoneDsc.ResourceHelper.psm1'))
 
 # Import Localization Strings
 $script:localizedData = Get-LocalizedData `
-    -ResourceName 'TimezoneDsc.Common' `
+    -ResourceName 'TimeZoneDsc.Common' `
     -ResourcePath $PSScriptRoot
 
 <#
     .SYNOPSIS
-        Get the of the current timezone Id.
+        Get the of the current time zone Id.
 #>
 function Get-TimeZoneId
 {
     [CmdletBinding()]
-    param()
+    param
+    (
+    )
 
-    if (Test-Command -Name 'Get-Timezone' -Module 'Microsoft.PowerShell.Management')
+    if (Test-Command -Name 'Get-TimeZone' -Module 'Microsoft.PowerShell.Management')
     {
-        Write-Verbose -Message ($LocalizedData.GettingTimezoneMessage -f 'Cmdlets')
+        Write-Verbose -Message ($LocalizedData.GettingTimeZoneMessage -f 'Cmdlets')
 
-        $Timezone = (Get-Timezone).StandardName
+        $timeZone = (Get-TimeZone).StandardName
     }
     else
     {
-        Write-Verbose -Message ($LocalizedData.GettingTimezoneMessage -f 'CIM')
+        Write-Verbose -Message ($LocalizedData.GettingTimeZoneMessage -f 'CIM')
 
-        $TimeZone = (Get-CimInstance `
-                -ClassName WIN32_Timezone `
+        $timeZone = (Get-CimInstance `
+                -ClassName Win32_TimeZone `
                 -Namespace root\cimv2).StandardName
     }
 
-    Write-Verbose -Message ($LocalizedData.CurrentTimezoneMessage `
-            -f $Timezone)
+    Write-Verbose -Message ($LocalizedData.CurrentTimeZoneMessage `
+            -f $timeZone)
 
     $timeZoneInfo = [System.TimeZoneInfo]::GetSystemTimeZones() |
-        Where-Object StandardName -eq $TimeZone
+        Where-Object StandardName -eq $timeZone
 
     return $timeZoneInfo.Id
 } # function Get-TimeZoneId
 
 <#
     .SYNOPSIS
-        Compare a timezone Id with the current timezone Id.
+        Compare a time zone Id with the current time zone Id.
 
     .PARAMETER TimeZoneId
-        The Id of the Timezone to compare with the current timezone.
+        The Id of the time zone to compare with the current time zone.
 #>
 function Test-TimeZoneId
 {
     [CmdletBinding()]
-    param(
+    param
+    (
         [Parameter(Mandatory = $true)]
         [System.String]
         $TimeZoneId
     )
 
-    # Test Expected is same as Current
+    # Test if the expected value is the same as the current value.
     $currentTimeZoneId = Get-TimeZoneId
 
     return $TimeZoneId -eq $currentTimeZoneId
@@ -65,38 +68,39 @@ function Test-TimeZoneId
 
 <#
     .SYNOPSIS
-        Sets the current timezone using a timezone Id.
+        Sets the current time zone using a time zone Id.
 
     .PARAMETER TimeZoneId
-        The Id of the Timezone to set.
+        The Id of the time zone to set.
 #>
 function Set-TimeZoneId
 {
     [CmdletBinding()]
-    param(
+    param
+    (
         [Parameter(Mandatory = $true)]
         [System.String]
         $TimeZoneId
     )
 
-    if (Test-Command -Name 'Set-Timezone' -Module 'Microsoft.PowerShell.Management')
+    if (Test-Command -Name 'Set-TimeZone' -Module 'Microsoft.PowerShell.Management')
     {
-        Set-Timezone -Id $TimezoneId
+        Set-TimeZone -Id $TimeZoneId
     }
     else
     {
         if (Test-Command -Name 'Add-Type' -Module 'Microsoft.Powershell.Utility')
         {
-            # We can use Reflection to modify the TimeZone
-            Write-Verbose -Message ($LocalizedData.SettingTimezoneMessage `
+            # We can use reflection to modify the time zone.
+            Write-Verbose -Message ($LocalizedData.SettingTimeZoneMessage `
                     -f $TimeZoneId, '.NET')
 
-            Set-TimeZoneUsingNET -TimezoneId $TimeZoneId
+            Set-TimeZoneUsingDotNet -TimezoneId $TimeZoneId
         }
         else
         {
-            # For anything else use TZUTIL.EXE
-            Write-Verbose -Message ($LocalizedData.SettingTimezoneMessage `
+            # For anything else use TZUTIL.EXE.
+            Write-Verbose -Message ($LocalizedData.SettingTimeZoneMessage `
                     -f $TimeZoneId, 'TZUTIL.EXE')
 
             try
@@ -105,37 +109,37 @@ function Set-TimeZoneId
             }
             catch
             {
-                $errorMsg = $_.Exception.Message
-
-                Write-Verbose -Message $errorMsg
+                Write-Verbose -Message $_.Exception.Message
             } # try
         } # if
     } # if
 
-    Write-Verbose -Message ($LocalizedData.TimezoneUpdatedMessage `
-            -f $TimeZone)
+    Write-Verbose -Message ($LocalizedData.TimeZoneUpdatedMessage `
+            -f $TimeZoneId)
 } # function Set-TimeZoneId
 
 <#
     .SYNOPSIS
-        This function exists so that the ::Set method can be mocked by Pester.
+        This function sets the time zone on the machine using .NET reflection.
+        It exists so that the ::Set method can be mocked by Pester.
 
     .PARAMETER TimeZoneId
-        The Id of the Timezone to set using .NET
+        The Id of the time zone to set using .NET.
 #>
-function Set-TimeZoneUsingNET
+function Set-TimeZoneUsingDotNet
 {
     [CmdletBinding()]
-    param(
+    param
+    (
         [Parameter(Mandatory = $true)]
         [System.String]
         $TimeZoneId
     )
 
     # Add the [TimeZoneHelper.TimeZone] type if it is not defined.
-    if (-not ([System.Management.Automation.PSTypeName]'TimeZoneHelper.TimeZone').Type)
+    if (-not ([System.Management.Automation.PSTypeName] 'TimeZoneHelper.TimeZone').Type)
     {
-        Write-Verbose -Message ($LocalizedData.AddingSetTimeZonedotNetTypeMessage)
+        Write-Verbose -Message ($LocalizedData.AddingSetTimeZoneDotNetTypeMessage)
 
         $setTimeZoneCs = Get-Content `
             -Path (Join-Path -Path $PSScriptRoot -ChildPath 'SetTimeZone.cs') `
@@ -147,7 +151,7 @@ function Set-TimeZoneUsingNET
     } # if
 
     [Microsoft.PowerShell.xTimeZone.TimeZone]::Set($TimeZoneId)
-} # function Set-TimeZoneUsingNET
+} # function Set-TimeZoneUsingDotNet
 
 <#
     .SYNOPSIS
@@ -163,7 +167,8 @@ function Test-Command
 {
     [CmdletBinding()]
     [OutputType([System.Boolean])]
-    param(
+    param
+    (
         [Parameter(Mandatory = $true)]
         [System.String]
         $Name,
@@ -180,6 +185,6 @@ Export-ModuleMember -Function @(
     'Get-TimeZoneId'
     'Test-TimeZoneId'
     'Set-TimeZoneId'
-    'Set-TimeZoneUsingNET'
+    'Set-TimeZoneUsingDotNet'
     'Test-Command'
 )

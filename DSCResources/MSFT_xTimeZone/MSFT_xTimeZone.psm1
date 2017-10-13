@@ -1,29 +1,29 @@
 $modulePath = Join-Path -Path (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Parent) -ChildPath 'Modules'
 
-# Import the Networking Common Modules
+# Import the time zone Common Modules.
 Import-Module -Name (Join-Path -Path $modulePath `
         -ChildPath (Join-Path -Path 'TimeZoneDsc.Common' `
             -ChildPath 'TimeZoneDsc.Common.psm1'))
 
-# Import the Networking Resource Helper Module
+# Import the time zone Resource Helper Module.
 Import-Module -Name (Join-Path -Path $modulePath `
         -ChildPath (Join-Path -Path 'TimeZoneDsc.ResourceHelper' `
             -ChildPath 'TimeZoneDsc.ResourceHelper.psm1'))
 
-# Import Localization Strings
+# Import Localization Strings.
 $LocalizedData = Get-LocalizedData `
     -ResourceName 'MSFT_xTimeZone' `
     -ResourcePath (Split-Path -Parent $Script:MyInvocation.MyCommand.Path)
 
 <#
     .SYNOPSIS
-    Returns the current Timezone of the node.
+    Returns the current time zone of the node.
 
     .PARAMETER IsSingleInstance
     Specifies the resource is a single instance, the value must be 'Yes'.
 
     .PARAMETER TimeZone
-    Specifies the TimeZone.
+    Specifies the time zone.
 #>
 function Get-TargetResource
 {
@@ -42,9 +42,9 @@ function Get-TargetResource
         $TimeZone
     )
 
-    Write-Verbose -Message ($LocalizedData.GettingTimezoneMessage)
+    Write-Verbose -Message ($LocalizedData.GettingTimeZoneMessage)
 
-    # Get the current TimeZone Id
+    # Get the current time zone Id.
     $currentTimeZone = Get-TimeZoneId
 
     $returnValue = @{
@@ -52,19 +52,19 @@ function Get-TargetResource
         TimeZone         = $currentTimeZone
     }
 
-    # Output the target resource
+    # Output the target resource.
     return $returnValue
 }
 
 <#
     .SYNOPSIS
-    Sets the current Timezone of the node.
+    Sets the current time zone of the node.
 
     .PARAMETER IsSingleInstance
     Specifies the resource is a single instance, the value must be 'Yes'.
 
     .PARAMETER TimeZone
-    Specifies the TimeZone.
+    Specifies the time zone.
 #>
 function Set-TargetResource
 {
@@ -86,25 +86,25 @@ function Set-TargetResource
 
     if ($currentTimeZone -ne $TimeZone)
     {
-        Write-Verbose -Message ($LocalizedData.SettingTimezoneMessage)
+        Write-Verbose -Message ($LocalizedData.SettingTimeZoneMessage)
         Set-TimeZoneId -TimeZone $TimeZone
     }
     else
     {
-        Write-Verbose -Message ($LocalizedData.TimezoneAlreadySetMessage `
-                -f $Timezone)
+        Write-Verbose -Message ($LocalizedData.TimeZoneAlreadySetMessage `
+                -f $TimeZone)
     }
 }
 
 <#
     .SYNOPSIS
-    Tests the current Timezone of the node.
+    Tests the current time zone of the node.
 
     .PARAMETER IsSingleInstance
     Specifies the resource is a single instance, the value must be 'Yes'.
 
     .PARAMETER TimeZone
-    Specifies the TimeZone.
+    Specifies the time zone.
 #>
 function Test-TargetResource
 {
@@ -123,7 +123,7 @@ function Test-TargetResource
         $TimeZone
     )
 
-    Write-Verbose -Message ($LocalizedData.TestingTimezoneMessage)
+    Write-Verbose -Message ($LocalizedData.TestingTimeZoneMessage)
 
     return Test-TimeZoneId -TimeZoneId $TimeZone
 }

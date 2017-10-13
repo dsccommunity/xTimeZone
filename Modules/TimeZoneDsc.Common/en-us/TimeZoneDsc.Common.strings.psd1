@@ -1,8 +1,8 @@
 # culture="en-US"
 ConvertFrom-StringData -StringData @'
-    CurrentTimezoneMessage             = Current Timezone is set to '{0}'
-    GettingTimezoneCimMessage          = Getting current Timezone using {0}
-    SettingTimezoneMessage             = Setting Timezone to '{0}' using {1}
-    TimezoneUpdatedMessage             = Timezone has been updated to '{0}'
-    AddingSetTimeZonedotNetTypeMessage = Adding .NET Set Timezone Type
+    CurrentTimeZoneMessage             = Current time zone is set to '{0}'
+    GettingTimeZoneCimMessage          = Getting current time zone using {0}.
+    SettingTimeZoneMessage             = Setting time zone to '{0}' using {1}.
+    TimeZoneUpdatedMessage             = Time zone has been updated to '{0}'.
+    AddingSetTimeZoneDotNetTypeMessage = Adding .NET Set time zone Type.
 '@

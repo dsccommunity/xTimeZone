@@ -1,8 +1,8 @@
 # culture="en-US"
 ConvertFrom-StringData -StringData @'
-    GettingTimezoneMessage       = Getting the TimeZone.
-    ReplaceSystemTimezoneMessage = Replace the System Time Zone
-    SettingTimezoneMessage       = Setting the TimeZone.
-    TimezoneAlreadySetMessage    = TimeZone already set to {0}.
-    TestingTimezoneMessage       = Testing the TimeZone.
+    GettingTimeZoneMessage       = Getting the time zone.
+    ReplaceSystemTimeZoneMessage = Replace the System time zone.
+    SettingTimeZoneMessage       = Setting the time zone.
+    TimeZoneAlreadySetMessage    = Time zone already set to {0}.
+    TestingTimeZoneMessage       = Testing the time zone.
 '@
