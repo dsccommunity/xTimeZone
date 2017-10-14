@@ -45,9 +45,15 @@ function New-InvalidArgumentException
     )
 
     $argumentException = New-Object -TypeName 'ArgumentException' -ArgumentList @( $Message, $ArgumentName )
+
     $newObjectParams = @{
         TypeName     = 'System.Management.Automation.ErrorRecord'
-        ArgumentList = @( $argumentException, $ArgumentName, 'InvalidArgument', $null )
+        ArgumentList = @(
+            $argumentException
+            $ArgumentName
+            'InvalidArgument'
+            $null
+        )
     }
 
     $errorRecord = New-Object @newObjectParams
@@ -96,11 +102,16 @@ function New-InvalidOperationException
 
     $newObjectParams = @{
         TypeName     = 'System.Management.Automation.ErrorRecord'
-        ArgumentList = @( $invalidOperationException.ToString(), 'MachineStateIncorrect',
-            'InvalidOperation', $null )
+        ArgumentList = @(
+            $invalidOperationException.ToString()
+            'MachineStateIncorrect'
+            'InvalidOperation'
+            $null
+        )
     }
 
     $errorRecordToThrow = New-Object @newObjectParams
+
     throw $errorRecordToThrow
 }
 

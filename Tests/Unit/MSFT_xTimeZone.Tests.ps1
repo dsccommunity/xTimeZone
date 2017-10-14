@@ -1,10 +1,10 @@
-$Script:DSCModuleName = 'xTimeZone'
-$Script:DSCResourceName = 'MSFT_xTimeZone'
+$script:DSCModuleName = 'xTimeZone'
+$script:DSCResourceName = 'MSFT_xTimeZone'
 
 Import-Module -Name (Join-Path -Path (Join-Path -Path (Split-Path $PSScriptRoot -Parent) -ChildPath 'TestHelpers') -ChildPath 'CommonTestHelper.psm1') -Global
 
 # Unit Test Template Version: 1.2.0
-[string] $script:moduleRoot = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $Script:MyInvocation.MyCommand.Path))
+[System.String] $script:moduleRoot = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $script:MyInvocation.MyCommand.Path))
 if ( (-not (Test-Path -Path (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests'))) -or `
     (-not (Test-Path -Path (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1'))) )
 {
@@ -23,18 +23,24 @@ $TestEnvironment = Initialize-TestEnvironment `
 try
 {
     #region Pester Tests
-    InModuleScope $Script:DSCResourceName {
-        $Script:DSCResourceName = 'MSFT_xTimeZone'
+    InModuleScope $script:DSCResourceName {
+        $script:DSCResourceName = 'MSFT_xTimeZone'
 
-        Describe 'Schema' {
-            It 'IsSingleInstance should be mandatory with one value.' {
+        Describe "$($script:DSCResourceName) MOF single instance schema" {
+            It 'Should have mandatory IsSingleInstance parameter and one other parameter' {
                 $timeZoneResource = Get-DscResource -Name xTimeZone
-                $timeZoneResource.Properties.Where{ $_.Name -eq 'IsSingleInstance' }.IsMandatory | Should be $true
-                $timeZoneResource.Properties.Where{ $_.Name -eq 'IsSingleInstance' }.Values | Should be 'Yes'
+
+                $timeZoneResource.Properties.Where{
+                    $_.Name -eq 'IsSingleInstance'
+                }.IsMandatory | Should Be $true
+
+                $timeZoneResource.Properties.Where{
+                    $_.Name -eq 'IsSingleInstance'
+                }.Values | Should Be 'Yes'
             }
         }
 
-        Describe "$($Script:DSCResourceName)\Get-TargetResource" {
+        Describe "$($script:DSCResourceName)\Get-TargetResource" {
             Mock `
                 -CommandName Get-TimeZoneId `
                 -MockWith { 'Pacific Standard Time' }
@@ -53,7 +59,7 @@ try
             }
         }
 
-        Describe "$($Script:DSCResourceName)\Set-TargetResource" {
+        Describe "$($script:DSCResourceName)\Set-TargetResource" {
             Mock `
                 -CommandName Set-TimeZoneId
 
@@ -90,7 +96,7 @@ try
             }
         }
 
-        Describe "$($Script:DSCResourceName)\Test-TargetResource" {
+        Describe "$($script:DSCResourceName)\Test-TargetResource" {
             Mock `
                 -ModuleName TimeZoneDsc.Common `
                 -CommandName Get-TimeZoneId `

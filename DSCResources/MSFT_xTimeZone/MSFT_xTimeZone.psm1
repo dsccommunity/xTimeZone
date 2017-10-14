@@ -13,7 +13,7 @@ Import-Module -Name (Join-Path -Path $modulePath `
 # Import Localization Strings.
 $LocalizedData = Get-LocalizedData `
     -ResourceName 'MSFT_xTimeZone' `
-    -ResourcePath (Split-Path -Parent $Script:MyInvocation.MyCommand.Path)
+    -ResourcePath (Split-Path -Parent $script:MyInvocation.MyCommand.Path)
 
 <#
     .SYNOPSIS
