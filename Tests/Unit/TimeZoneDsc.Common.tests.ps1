@@ -104,13 +104,13 @@ InModuleScope $script:ModuleName {
 
         Context 'current timezone matches desired timezone' {
             It 'Should return $true' {
-                Test-TimezoneId -TimeZoneId 'Russia Time Zone 11' | Should Be $True
+                Test-TimezoneId -TimeZoneId 'Russia Time Zone 11' | Should Be $true
             }
         }
 
         Context 'current timezone does not match desired timezone' {
             It 'Should return $false' {
-                Test-TimezoneId -TimeZoneId 'GMT Standard Time' | Should Be $False
+                Test-TimezoneId -TimeZoneId 'GMT Standard Time' | Should Be $false
             }
         }
     }
@@ -132,7 +132,7 @@ InModuleScope $script:ModuleName {
 
             Mock -CommandName Add-Type
 
-            It 'Should not throw and exception' {
+            It 'Should not throw an exception' {
                 { Set-TimeZoneId -TimezoneId 'Eastern Standard Time' } | Should Not Throw
             }
 
@@ -242,7 +242,7 @@ InModuleScope $script:ModuleName {
             It 'Should return $true' {
                 Test-Command `
                     -Name 'Get-TimeZone' `
-                    -Module 'Microsoft.PowerShell.Management' | Should Be $True
+                    -Module 'Microsoft.PowerShell.Management' | Should Be $true
             }
 
             It 'Should call expected mocks' {
@@ -264,7 +264,7 @@ InModuleScope $script:ModuleName {
             It 'Should return $false' {
                 Test-Command `
                     -Name 'Get-TimeZone' `
-                    -Module 'Microsoft.PowerShell.Management' | Should Be $False
+                    -Module 'Microsoft.PowerShell.Management' | Should Be $false
             }
 
             It 'Should call expected mocks' {
