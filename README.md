@@ -54,6 +54,8 @@ update the time zone if required. If .NET reflection is not supported on the nod
 
 ### Unreleased
 
+### 1.7.0.0
+
 * Added resource helper module.
 * Changed resource file names to include MSFT_*.
 * Added MSFT_ to MOF file classname.
