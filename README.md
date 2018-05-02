@@ -54,7 +54,7 @@ update the time zone if required. If .NET reflection is not supported on the nod
 
 ### Unreleased
 
-* Fixed xTimeZone Examples link in README.md
+* Fixed xTimeZone Examples link in README.md.
 
 ### 1.7.0.0
 
