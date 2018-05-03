@@ -48,11 +48,13 @@ update the time zone if required. If .NET reflection is not supported on the nod
 
 ### xTimeZone Examples
 
-* [Set the time zone of the computer](/Examples/Resources/xTimeZone/1-SetTimeZone.ps1)
+* [Set the time zone of the computer](/Examples/Resources/xTimezone/1-SetTimeZone.ps1)
 
 ## Versions
 
 ### Unreleased
+
+* Fixed xTimeZone Examples link in README.md.
 
 ### 1.7.0.0
 
