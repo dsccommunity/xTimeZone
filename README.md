@@ -1,4 +1,10 @@
-# xTimeZone
+# **THIS MODULE HAS BEEN DEPRECATED**
+
+It will no longer be released.
+Please use the 'TimeZone' resource in [ComputerManagementDsc](https://github.com/PowerShell/ComputerManagementDsc)
+instead.
+
+## xTimeZone
 
 The **xTimeZone** module contains the **xTimeZone** DSC resource for setting the
 time zone on a machine.
