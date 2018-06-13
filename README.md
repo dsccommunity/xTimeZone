@@ -1,4 +1,10 @@
-# xTimeZone
+# **THIS MODULE HAS BEEN DEPRECATED**
+
+It will no longer be released.
+Please use the 'TimeZone' resource in [ComputerManagementDsc](https://github.com/PowerShell/ComputerManagementDsc)
+instead.
+
+## xTimeZone
 
 The **xTimeZone** module contains the **xTimeZone** DSC resource for setting the
 time zone on a machine.
@@ -48,11 +54,17 @@ update the time zone if required. If .NET reflection is not supported on the nod
 
 ### xTimeZone Examples
 
-* [Set the time zone of the computer](/Examples/Resources/xTimeZone/1-SetTimeZone.ps1)
+* [Set the time zone of the computer](/Examples/Resources/xTimezone/1-SetTimeZone.ps1)
 
 ## Versions
 
 ### Unreleased
+
+### 1.8.0.0
+
+* THIS MODULE HAS BEEN DEPRECATED. It will no longer be released.
+  Please use the 'TimeZone' resource in ComputerManagementDsc instead.
+* Fixed xTimeZone Examples link in README.md.
 
 ### 1.7.0.0
 
