@@ -60,6 +60,7 @@ update the time zone if required. If .NET reflection is not supported on the nod
 
 ### Unreleased
 
+* THIS MODULE HAS BEEN DEPRECATED. It will no longer be released. Please use the 'TimeZone' resource in ComputerManagementDsc instead.
 * Fixed xTimeZone Examples link in README.md.
 
 ### 1.7.0.0
